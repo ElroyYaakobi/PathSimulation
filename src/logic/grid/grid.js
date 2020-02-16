@@ -1,6 +1,8 @@
 import Cell from "./cell";
 import Config from "../../config";
 
+import ObjectTypes from "./objectTypes";
+
 const EventEmitter = require("events");
 
 class Grid {
@@ -40,11 +42,12 @@ class Grid {
 
   //#region cell modification/ helpers
 
-  onCellModified(cell, emitTarget = "modified") {
+  onCellModified(cell, emitTarget = "modified", additionalData = undefined) {
     this.eventEmitter.emit(
       emitTarget,
       cell,
-      this.transformUnitsToIndex(cell.x, cell.y)
+      this.transformUnitsToIndex(cell.x, cell.y),
+      additionalData
     );
   }
 
@@ -62,6 +65,10 @@ class Grid {
     return this.cells[index];
   }
 
+  getCellWithObjectType(objectType) {
+    return this.cells.find(x => x.objectType === objectType);
+  }
+
   isInBounds(x, y) {
     const { width } = this;
 
@@ -70,26 +77,28 @@ class Grid {
 
   //#endregion
 
-  //#region cells min/max scores
+  //#region special object type moving methods
 
-  findSmallestScoreCell(cells) {
-    if (cells.length === 1) return cells[0];
+  moveItemToCell(objectType, targetCellUnits) {
+    if (!objectType || !targetCellUnits)
+      throw new Error(
+        "parameters weren't specified properly! can't process move items handler"
+      );
 
-    let smallestScoreCell = undefined;
-    for (let i = cells.length - 1; i >= 0; i--) {
-      const cell = cells[i];
+    const currentCell = this.getCellWithObjectType(objectType);
+    if (!currentCell)
+      throw new Error(
+        "can't find current cell with object type " +
+          objectType +
+          " can't process drop handler"
+      );
 
-      // check if we have a smallest score assigned and if so, if the current one is higer, continue
-      if (
-        smallestScoreCell &&
-        cell.pathData.score >= smallestScoreCell.pathData.score
-      )
-        continue;
+    const targetCell = this.getCell(targetCellUnits.x, targetCellUnits.y);
+    if (!targetCell)
+      throw new Error("can't find the target cell. can't process drop handler");
 
-      smallestScoreCell = cell;
-    }
-
-    return smallestScoreCell;
+    currentCell.objectType = ObjectTypes.empty;
+    targetCell.objectType = objectType;
   }
 
   //#endregion

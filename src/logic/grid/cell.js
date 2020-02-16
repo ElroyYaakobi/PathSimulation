@@ -24,12 +24,17 @@ class Cell {
   }
 
   set objectType(value) {
-    if (!(typeof value === "number")) return;
+    if (!(typeof value === "string")) return;
+
+    // keep the old type in memory so we can launch that in the event
+    const cachedObjectType = this._objectType;
 
     this._objectType = value;
 
     this.grid.onCellModified(this, "modified"); // once for updating the grid visuals
-    this.grid.onCellModified(this, "objectChange"); // once for recalculating path
+    this.grid.onCellModified(this, "objectChange", {
+      oldType: cachedObjectType
+    }); // once for recalculating path
   }
 
   get cellColor() {
@@ -48,7 +53,10 @@ class Cell {
   //#region general methods
 
   resetCellColor() {
-    this.cellColor = "rgb(237, 245, 225)";
+    const defaultColor = "rgb(237, 245, 225)";
+
+    if (this.cellColor === defaultColor) return;
+    this.cellColor = defaultColor;
   }
 
   simplify() {

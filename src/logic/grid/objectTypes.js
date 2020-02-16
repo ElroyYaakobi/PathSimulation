@@ -1,8 +1,8 @@
 const cellObjects = {
-  empty: 0,
-  startPoint: 1,
-  endPoint: 2,
-  obstacle: 3
+  empty: "empty",
+  startPoint: "startPoint",
+  endPoint: "endPoint",
+  obstacle: "obstacle"
 };
 
 export default cellObjects;

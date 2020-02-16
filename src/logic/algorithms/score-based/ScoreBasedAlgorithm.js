@@ -9,7 +9,7 @@ export default class ScoreBasedAlgorithm extends BaseAlgorithm {
     let { unvisited, startPoint, endPoint } = this.createPreCalcData(grid);
 
     while (unvisited.length > 0) {
-      const cell = grid.findSmallestScoreCell(unvisited);
+      const cell = this.findSmallestScoreCell(unvisited);
       const cellNeighbors = cell.getNeighbors();
 
       // if we have the end point in our neighbors then we won!
@@ -72,5 +72,25 @@ export default class ScoreBasedAlgorithm extends BaseAlgorithm {
 
     // set score.
     cell.pathData.score = 0;
+  }
+
+  findSmallestScoreCell(cells) {
+    if (cells.length === 1) return cells[0];
+
+    let smallestScoreCell = undefined;
+    for (let i = cells.length - 1; i >= 0; i--) {
+      const cell = cells[i];
+
+      // check if we have a smallest score assigned and if so, if the current one is higer, continue
+      if (
+        smallestScoreCell &&
+        cell.pathData.score >= smallestScoreCell.pathData.score
+      )
+        continue;
+
+      smallestScoreCell = cell;
+    }
+
+    return smallestScoreCell;
   }
 }

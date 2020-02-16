@@ -32,10 +32,3 @@
 
   align-content: center;
 }
-
-img {
-  -webkit-user-drag: none;
-  -ms-user-drag: none;
-  -moz-user-drag: none;
-  --user-drag: none;
-}

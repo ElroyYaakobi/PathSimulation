@@ -15,12 +15,8 @@ export default class BaseAlgorithm {
       this.prepareCellForPathFinding(cell);
     }
 
-    const startPoint = grid.cells.find(
-      x => x.objectType === ObjectTypes.startPoint
-    );
-    const endPoint = grid.cells.find(
-      x => x.objectType === ObjectTypes.endPoint
-    );
+    const startPoint = grid.getCellWithObjectType(ObjectTypes.startPoint);
+    const endPoint = grid.getCellWithObjectType(ObjectTypes.endPoint);
 
     return {
       unvisited: [startPoint],
