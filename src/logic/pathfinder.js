@@ -72,7 +72,7 @@ const simulateRewind = async function(startPoint, endPoint, rewindRoute) {
   const drawPath = new Promise(async res => {
     for (let cell of rewind_pathCells) {
       cell.cellColor = routeColor;
-      await sleep(2);
+      await sleep(100);
     }
     res();
   });
