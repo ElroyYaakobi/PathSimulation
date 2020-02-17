@@ -80,7 +80,7 @@ class Grid {
   //#region cell moving/ removal
 
   clearAllObjects(objectType) {
-    for (let cell of cells) {
+    for (let cell of this.cells) {
       if (cell.objectType !== objectType) continue;
 
       cell.objectType = ObjectTypes.empty;
