@@ -1,6 +1,6 @@
-import ObjectTypes from "../grid/objectTypes";
+import ObjectTypes from "../../grid/objectTypes";
 
-export default class BaseAlgorithm {
+export default class BasePathAlgorithm {
   calculateRoute(grid, willRewindRoute) {
     return undefined;
   }
@@ -20,6 +20,7 @@ export default class BaseAlgorithm {
 
     return {
       unvisited: [startPoint],
+      visited: [],
       startPoint,
       endPoint
     };

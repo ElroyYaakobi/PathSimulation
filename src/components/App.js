@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import HeaderComponent from "./header/header";
 import GridComponent from "./grid/grid";

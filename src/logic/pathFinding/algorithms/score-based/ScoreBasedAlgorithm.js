@@ -1,13 +1,15 @@
-import BaseAlgorithm from "../BaseAlgorithm";
-import ObjectTypes from "../../grid/objectTypes";
+import BasePathAlgorithm from "../BasePathAlgorithm";
+import ObjectTypes from "../../../grid/objectTypes";
 
-export default class ScoreBasedAlgorithm extends BaseAlgorithm {
+export default class ScoreBasedAlgorithm extends BasePathAlgorithm {
   calculateRoute(grid, willRewindRoute) {
     const t0 = Date.now();
     const rewindStack = [];
     let tracedRoute = undefined;
 
-    let { unvisited, startPoint, endPoint } = this.createPreCalcData(grid);
+    let { unvisited, visited, startPoint, endPoint } = this.createPreCalcData(
+      grid
+    );
 
     while (unvisited.length > 0) {
       const cell = this.findSmallestScoreCell(unvisited);
@@ -20,7 +22,7 @@ export default class ScoreBasedAlgorithm extends BaseAlgorithm {
       }
 
       unvisited = unvisited.filter(x => x !== cell); // remove from unvisited as we are calculating it now
-      cell.pathData.visited = true; // add visited flag
+      visited.push(cell); // add cell to visited
 
       for (let neighbor of cellNeighbors) {
         const neighborPathData = neighbor.pathData;
@@ -28,7 +30,7 @@ export default class ScoreBasedAlgorithm extends BaseAlgorithm {
         // ignore obstacles and already visited cells
         if (
           neighbor.objectType === ObjectTypes.obstacle ||
-          neighborPathData.visited
+          visited.includes(neighbor)
         )
           continue;
 

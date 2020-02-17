@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { DndProvider } from "react-dnd";
 
-import Pathfinder from "../../logic/pathfinder";
+import Pathfinder from "../../logic/pathFinding/pathfinder";
 import ObjectTypes from "../../logic/grid/objectTypes";
 import Config from "../../config";
 

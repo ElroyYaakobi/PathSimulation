@@ -40,7 +40,7 @@ class Grid {
 
   //#endregion
 
-  //#region cell modification/ helpers
+  //#region cell helpers
 
   onCellModified(cell, emitTarget = "modified", additionalData = undefined) {
     this.eventEmitter.emit(
@@ -77,7 +77,15 @@ class Grid {
 
   //#endregion
 
-  //#region special object type moving methods
+  //#region cell moving/ removal
+
+  clearAllObjects(objectType) {
+    for (let cell of cells) {
+      if (cell.objectType !== objectType) continue;
+
+      cell.objectType = ObjectTypes.empty;
+    }
+  }
 
   moveItemToCell(objectType, targetCellUnits) {
     if (!objectType || !targetCellUnits)
