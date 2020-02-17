@@ -53,18 +53,32 @@ const simulateRewind = async function(startPoint, endPoint, rewindRoute) {
     await sleep(1);
   }
 
-  rewindRoute.unshift(startPoint); // add to beginning
-  rewindRoute.push(endPoint); // add to the end
+  const resetCells = new Promise(async res => {
+    for (let cell of rewindRoute) {
+      if (cell.pathData.isPath) continue;
 
-  for (let cell of rewindRoute) {
-    if (!cell.pathData.isPath) {
       cell.resetCellColor();
       await sleep(1);
-
-      continue;
+      //cell.cellColor = routeColor;
     }
-    cell.cellColor = routeColor;
-  }
+    res();
+  });
+
+  // create a new array of cells without cells that aren't path.
+  const rewind_pathCells = rewindRoute.filter(cell => cell.pathData.isPath);
+  rewind_pathCells.unshift(startPoint); // add start point to beginning
+  rewind_pathCells.push(endPoint); // add end point to the end
+
+  const drawPath = new Promise(async res => {
+    for (let cell of rewind_pathCells) {
+      cell.cellColor = routeColor;
+      await sleep(1);
+    }
+    res();
+  });
+
+  // run asynchrously
+  await Promise.all([resetCells, drawPath]);
 };
 
 //#endregion

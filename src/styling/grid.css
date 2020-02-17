@@ -12,7 +12,7 @@
 }
 
 .cell {
-  transition: background-color 0.5 ease;
+  transition: background-color 0.3s ease;
 }
 .cellObjectsParent {
   width: 100%;
