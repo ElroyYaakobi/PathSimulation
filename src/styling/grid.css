@@ -9,6 +9,9 @@
   -khtml-user-select: none;
   -webkit-user-select: none;
   -o-user-select: none;
+
+  touch-action: manipulation;
+  -ms-touch-action: manipulation;
 }
 
 .cell {
