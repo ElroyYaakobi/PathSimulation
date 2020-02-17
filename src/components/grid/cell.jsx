@@ -4,8 +4,8 @@ import { useDrop } from "react-dnd";
 import { makeStyles } from "@material-ui/core/styles";
 
 import pathFinder from "../../logic/pathfinder";
-import CellObjectDrawer from "./objects/objectDrawer";
-import CellObjectsType from "../../logic/grid/objectTypes";
+import ObjectDrawer from "./objects/objectDrawer";
+import ObjectTypes from "../../logic/grid/objectTypes";
 
 const toolbarSettings = require("../header/toolbarSettings");
 
@@ -30,17 +30,13 @@ export default function CellComponent(props) {
   //#region Drag and Drop Implementation
 
   const [, drop] = useDrop({
-    accept: [CellObjectsType.startPoint, CellObjectsType.endPoint],
+    accept: [ObjectTypes.startPoint, ObjectTypes.endPoint],
     drop: dropProps => {
       const objectType = dropProps.type;
       pathFinder.grid.moveItemToCell(objectType, props.data);
     },
-    canDrop: () => canBeDropped()
+    canDrop: () => props.data.objectType === ObjectTypes.empty
   });
-
-  const canBeDropped = () => {
-    return props.data.objectType === CellObjectsType.empty;
-  };
 
   //#endregion
 
@@ -48,21 +44,35 @@ export default function CellComponent(props) {
 
   const handleMouseHeld = e => {
     if (e.buttons !== 1) return;
-
-    const { x, y, objectType } = props.data;
-    const emptyOrObstacle =
-      objectType === CellObjectsType.obstacle ||
-      objectType === CellObjectsType.empty;
-
-    const drawingObjectType = toolbarSettings.getSafeDrawingType();
-    if (objectType === drawingObjectType || !emptyOrObstacle) return;
-
-    const cell = pathFinder.grid.getCell(x, y);
-    cell.objectType = drawingObjectType;
+    handlePaintObject(true);
   };
 
   const handleMousePress = () => {
-    handleMouseHeld({ buttons: 1 });
+    handlePaintObject(false);
+  };
+
+  const handlePaintObject = function(isHoldingMouse) {
+    const { x, y, objectType } = props.data;
+
+    // can't paint these types
+    if (
+      objectType === ObjectTypes.startPoint ||
+      objectType === ObjectTypes.endPoint
+    )
+      return;
+
+    let drawingObjectType = toolbarSettings.getSafeDrawingType();
+    const isSameObject = drawingObjectType === objectType;
+
+    if (isSameObject) {
+      // if we are not changing the object while holding mouse, return
+      if (isHoldingMouse) return;
+
+      drawingObjectType = ObjectTypes.empty; // else, flip back to no object
+    }
+
+    const cell = pathFinder.grid.getCell(x, y);
+    cell.objectType = drawingObjectType;
   };
 
   //#endregion
@@ -77,7 +87,7 @@ export default function CellComponent(props) {
       onMouseMove={handleMouseHeld}
     >
       <div className="cellObjectsParent">
-        <CellObjectDrawer object={props.data.objectType}></CellObjectDrawer>
+        <ObjectDrawer object={props.data.objectType}></ObjectDrawer>
       </div>
     </div>
   );
