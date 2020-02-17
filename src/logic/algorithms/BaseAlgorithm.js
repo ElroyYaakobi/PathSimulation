@@ -33,11 +33,16 @@ export default class BaseAlgorithm {
   tracebackRoute(endPoint) {
     if (!endPoint || !endPoint.pathData.prev) return;
 
-    let prev = endPoint;
+    const route = [];
 
+    let prev = endPoint;
     while (prev) {
       prev.pathData.isPath = true;
       prev = prev.pathData.prev;
+
+      route.push(prev);
     }
+
+    return route;
   }
 }

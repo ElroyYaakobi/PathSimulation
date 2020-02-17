@@ -12,20 +12,21 @@ const simulatePath = function(willRewindRoute = false) {
   if (!this.pathFindingAlgorithm) return;
 
   const {
-    rewindRoute,
+    tracedRoute,
+    rewindStack,
     startPoint,
     endPoint
   } = this.pathFindingAlgorithm.calculateRoute(this.grid, willRewindRoute);
 
   if (willRewindRoute) {
-    this.simulateRewind(startPoint, endPoint, rewindRoute);
+    this.simulateRewind(startPoint, endPoint, rewindStack);
   } else {
     this.simulatePathVisuals(grid);
   }
 
   this.pathGenerated = true;
 
-  return endPoint;
+  return tracedRoute;
 };
 
 const clearPath = function() {

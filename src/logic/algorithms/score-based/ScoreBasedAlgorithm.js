@@ -4,7 +4,8 @@ import ObjectTypes from "../../grid/objectTypes";
 export default class ScoreBasedAlgorithm extends BaseAlgorithm {
   calculateRoute(grid, willRewindRoute) {
     const t0 = Date.now();
-    const rewindRoute = [];
+    const rewindStack = [];
+    let tracedRoute = undefined;
 
     let { unvisited, startPoint, endPoint } = this.createPreCalcData(grid);
 
@@ -47,20 +48,20 @@ export default class ScoreBasedAlgorithm extends BaseAlgorithm {
         neighborPathData.prev = cell;
 
         if (!willRewindRoute) continue;
-        rewindRoute.push(neighbor);
+        rewindStack.push(neighbor);
       }
     }
 
     const foundPath = endPoint.pathData.prev;
     if (foundPath) {
-      this.tracebackRoute(endPoint);
+      tracedRoute = this.tracebackRoute(endPoint);
     }
 
     const t1 = Date.now();
 
     console.log("It took " + (t1 - t0) + " milliseconds to compute path!");
 
-    return { rewindRoute, startPoint, endPoint };
+    return { tracedRoute, rewindStack, startPoint, endPoint };
   }
 
   calculateScore(cell, neighborCell, endPoint) {
