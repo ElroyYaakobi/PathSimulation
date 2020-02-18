@@ -30,7 +30,6 @@ class GridComponent extends Component {
       const { cells } = this.state;
       cells[index] = cell.simplify();
       this.setState({ cells });
-      this.forceUpdate();
     });
 
     Pathfinder.grid.eventEmitter.on(

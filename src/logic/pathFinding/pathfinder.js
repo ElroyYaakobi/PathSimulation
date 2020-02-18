@@ -38,7 +38,7 @@ const clearPath = function() {
 
 //#region Visuals
 const rewindColor = "rgb(256, 256,0)";
-const routeColor = "black";
+const routeColor = "rgb(72,209,204)";
 
 const simulatePathVisuals = function(grid) {
   for (let cell of grid.cells) {
@@ -49,12 +49,16 @@ const simulatePathVisuals = function(grid) {
 };
 
 const simulateRewind = async function(startPoint, endPoint, rewindRoute) {
+  rewindRoute.unshift(startPoint); // add start point to beginning
+  rewindRoute.push(endPoint); // add end point to end
+
   for (let cell of rewindRoute) {
     cell.cellColor = rewindColor;
     await sleep(1);
   }
 
-  const resetCells = new Promise(async res => {
+  // this will turn off the rewind route
+  new Promise(async res => {
     for (let cell of rewindRoute) {
       if (cell.pathData.isPath) continue;
 
@@ -65,21 +69,19 @@ const simulateRewind = async function(startPoint, endPoint, rewindRoute) {
     res();
   });
 
-  // create a new array of cells without cells that aren't path.
-  const rewind_pathCells = rewindRoute.filter(cell => cell.pathData.isPath);
-  rewind_pathCells.unshift(startPoint); // add start point to beginning
-  rewind_pathCells.push(endPoint); // add end point to the end
+  // this will show the actual end route
+  let visitedCells = [];
+  new Promise(async res => {
+    for (let cell of rewindRoute) {
+      if (!cell.pathData.isPath || visitedCells.includes(cell)) continue;
 
-  const drawPath = new Promise(async res => {
-    for (let cell of rewind_pathCells) {
       cell.cellColor = routeColor;
+      visitedCells.push(cell);
+
       await sleep(100);
     }
     res();
   });
-
-  // run asynchrously
-  await Promise.all([resetCells, drawPath]);
 };
 
 //#endregion

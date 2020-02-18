@@ -27,7 +27,7 @@ class Grid {
   }
 
   clearObjects() {
-    this.cells.map(x => (x.objectType = 0));
+    this.cells.map(x => (x.objectType = ObjectTypes.empty));
   }
 
   spawnDefaultItems() {
