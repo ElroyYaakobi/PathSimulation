@@ -5,18 +5,16 @@ import Manager from "../../../logic/manager";
 import PathFinder from "../../../logic/Algorithms/pathFinding/pathfinder";
 
 export default function ClearButton() {
-  let initialized = false;
-  const [isUsable, setIsUsable] = React.useState(true);
+  const [isUsable, setIsUsable] = React.useState(-1);
 
   useEffect(() => {
-    if (initialized) return;
-
-    initialized = true;
+    if (isUsable !== -1) return;
+    setIsUsable(true);
 
     Manager.grid.eventEmitter.on("simulateChanged", simulating => {
       setIsUsable(!simulating);
     });
-  });
+  }, [isUsable]);
 
   const handleClick = () => {
     PathFinder.clearPath();
