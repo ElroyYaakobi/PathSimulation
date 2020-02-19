@@ -1,6 +1,4 @@
 import sample from "lodash.sample";
-
-import ObjectTypes from "../../../grid/objectTypes";
 import BaseMazeAlgorithm from "./BaseMazeAlgorithm";
 
 export default class RecrusiveBacktracing extends BaseMazeAlgorithm {
@@ -53,6 +51,8 @@ export default class RecrusiveBacktracing extends BaseMazeAlgorithm {
       .map(neighbor => {
         neighbor.mazeData.prev = cell;
         checked.push(neighbor);
+
+        return 0;
       });
 
     // set the selected cell to open

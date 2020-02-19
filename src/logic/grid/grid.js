@@ -7,6 +7,7 @@ const EventEmitter = require("events");
 
 class Grid {
   eventEmitter = new EventEmitter();
+  isSimulated = false;
 
   //#region initializers
 
@@ -78,6 +79,13 @@ class Grid {
   //#endregion
 
   //#region cell moving/ removal
+
+  setSimulationState(value) {
+    if (this.isSimulated === value) return;
+
+    this.isSimulated = value;
+    this.eventEmitter.emit("simulateChanged", value);
+  }
 
   clearAllObjects(objectType) {
     for (let cell of this.cells) {

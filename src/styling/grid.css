@@ -17,6 +17,7 @@
 .cell {
   transition: background-color 0.3s ease;
 }
+
 .cellObjectsParent {
   width: 100%;
   height: 100%;
@@ -26,12 +27,34 @@
 
   display: inline-flex;
 }
+
 .cellObject {
   width: 75%;
   height: 75%;
 
   margin-left: 10%;
   margin-top: 10%;
+}
 
-  align-content: center;
+.obstacle {
+  animation-name: obstacleAppearAnimation;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+}
+
+@keyframes obstacleAppearAnimation {
+  0% {
+    width: 10%;
+    height: 10%;
+
+    margin-left: 40%;
+    margin-top: 40%;
+  }
+  100% {
+    width: 75%;
+    width: 75%;
+
+    margin-left: 10%;
+    margin-top: 10%;
+  }
 }

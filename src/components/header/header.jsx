@@ -19,7 +19,7 @@ class HeaderComponent extends Component {
 
   render() {
     return (
-      <div id="header">
+      <div id="header" disabled="true">
         <span className="LeftItems">
           <Logo></Logo>
 

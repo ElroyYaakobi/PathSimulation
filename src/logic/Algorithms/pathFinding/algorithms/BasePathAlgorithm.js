@@ -1,4 +1,3 @@
-import ObjectTypes from "../../../grid/objectTypes";
 import BaseAlgorithm from "../../BaseAlgorithm";
 
 /**

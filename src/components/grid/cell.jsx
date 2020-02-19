@@ -3,6 +3,7 @@ import React from "react";
 import { useDrop } from "react-dnd";
 import { makeStyles } from "@material-ui/core/styles";
 
+import Manager from "../../logic/manager";
 import pathFinder from "../../logic/Algorithms/pathFinding/pathfinder";
 import ObjectDrawer from "./objects/objectDrawer";
 import ObjectTypes from "../../logic/grid/objectTypes";
@@ -10,7 +11,7 @@ import ObjectTypes from "../../logic/grid/objectTypes";
 const toolbarSettings = require("../header/toolbarSettings");
 
 const cellWidth = window.innerWidth <= 700 ? 25 : 50; // hard coded for now
-const marginSpace = (window.innerWidth - pathFinder.grid.width * cellWidth) / 2;
+const marginSpace = (window.innerWidth - Manager.grid.width * cellWidth) / 2;
 
 const useStyle = makeStyles({
   root: {
@@ -71,7 +72,7 @@ export default function CellComponent(props) {
       drawingObjectType = ObjectTypes.empty; // else, flip back to no object
     }
 
-    const cell = pathFinder.grid.getCell(x, y);
+    const cell = Manager.grid.getCell(x, y);
     cell.objectType = drawingObjectType;
   };
 

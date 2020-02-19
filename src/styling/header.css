@@ -39,12 +39,11 @@
 /* toggle */
 #header .ToggleBox {
   width: 3vw;
-  height: 2vw;
+  height: 3vw;
 }
 
 #header .ToggleButton {
-  height: 3vh;
-  width: 2vw;
+  height: 2vh;
 }
 
 /* select */
