@@ -2,12 +2,10 @@ import React from "react";
 import { Button } from "@material-ui/core";
 
 import PathFinder from "../../../logic/Algorithms/pathFinding/pathfinder";
-import MazeGenerator from "../../../logic/Algorithms/mazeGeneration/mazeGenerator";
 
-export default function SimulateButton() {
+export default function SimulatePathButton() {
   const handleClick = () => {
-    //PathFinder.simulatePath(true);
-    MazeGenerator.generateMaze();
+    PathFinder.simulatePath(true);
   };
 
   return (
@@ -17,7 +15,7 @@ export default function SimulateButton() {
       className="RightItem"
       onClick={handleClick}
     >
-      Simulate
+      Simulate Path
     </Button>
   );
 }

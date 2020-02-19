@@ -10,7 +10,7 @@ import DijkstraAlgorithm from "../../../logic/Algorithms/pathFinding/algorithms/
 
 const algorithms = [new AStarAlgorithm(), new DijkstraAlgorithm()];
 
-export default function AlgorithmSelect() {
+export default function PathAlgorithmSelect() {
   const [selectedAlgo, setAlgo] = React.useState(0);
 
   const changeHandler = event => {

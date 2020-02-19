@@ -2,8 +2,12 @@ import React, { Component } from "react";
 
 import Logo from "./subTypes/logo";
 import ObstacleToggle from "./subTypes/obstacleToggle";
-import AlgorithmSelect from "./subTypes/algorithmSelect";
-import SimulateButton from "./subTypes/simulateButton";
+
+import PathAlgorithmSelect from "./subTypes/pathAlgorithmSelect";
+import MazeAlgorithmSelect from "./subTypes/mazeAlgorithmSelect";
+
+import SimulatePathButton from "./subTypes/simulatePathButton";
+import SimulateMazeButton from "./subTypes/simulateMazeButton";
 import ClearButton from "./subTypes/clearButton";
 
 import "../../styling/header.css";
@@ -16,17 +20,18 @@ class HeaderComponent extends Component {
   render() {
     return (
       <div id="header">
-        <div className="LeftItems">
+        <span className="LeftItems">
           <Logo></Logo>
-        </div>
-        <div className="MiddleItemsBox">
-          <ObstacleToggle></ObstacleToggle>
-          <AlgorithmSelect></AlgorithmSelect>
-        </div>
-        <div className="RightItems">
-          <SimulateButton></SimulateButton>
+
+          <ObstacleToggle className="LeftItem"></ObstacleToggle>
+          <PathAlgorithmSelect className="LeftItem"></PathAlgorithmSelect>
+          <MazeAlgorithmSelect className="LeftItem"></MazeAlgorithmSelect>
+        </span>
+        <span className="RightItems">
+          <SimulatePathButton></SimulatePathButton>
+          <SimulateMazeButton></SimulateMazeButton>
           <ClearButton></ClearButton>
-        </div>
+        </span>
       </div>
     );
   }

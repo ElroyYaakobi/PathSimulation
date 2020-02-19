@@ -12,28 +12,23 @@
 }
 
 #header .LeftItems .Logo {
-  position: absolute;
-
+  float: left;
   margin-left: 1vw;
 
-  height: calc(var(--header-height) / 1.5);
+  height: calc(var(--header-height));
+  width: calc(var(--header-height));
+
+  margin-right: 3vw;
 }
 
-#header .MiddleItemsBox {
-  position: absolute;
-  margin-top: 0;
-  width: 25%;
-  vertical-align: middle;
-  left: 40%;
+#header .LeftItems .LeftItem {
 }
 
 #header .RightItems {
-  position: absolute;
+  float: right;
 
   text-align: center;
   line-height: var(--header-height);
-
-  left: 80%;
 }
 
 #header .RightItems .RightItem {
@@ -43,12 +38,13 @@
 
 /* toggle */
 #header .ToggleBox {
-  width: 2vw;
-  height: 3vh;
+  width: 3vw;
+  height: 2vw;
 }
 
 #header .ToggleButton {
-  height: 2vh;
+  height: 3vh;
+  width: 2vw;
 }
 
 /* select */
