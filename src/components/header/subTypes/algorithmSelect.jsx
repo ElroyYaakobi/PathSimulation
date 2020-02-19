@@ -4,9 +4,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
-import PathFinder from "../../../logic/pathFinding/pathfinder";
-import AStarAlgorithm from "../../../logic/pathFinding/algorithms/score-based/AStar";
-import DijkstraAlgorithm from "../../../logic/pathFinding/algorithms/score-based/Dijkstra";
+import PathFinder from "../../../logic/Algorithms/pathFinding/pathfinder";
+import AStarAlgorithm from "../../../logic/Algorithms/pathFinding/algorithms/score-based/AStar";
+import DijkstraAlgorithm from "../../../logic/Algorithms/pathFinding/algorithms/score-based/Dijkstra";
 
 const algorithms = [new AStarAlgorithm(), new DijkstraAlgorithm()];
 

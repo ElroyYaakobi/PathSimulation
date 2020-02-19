@@ -1,8 +1,8 @@
-import Grid from "../grid/grid";
-import Config from "../../config";
+import Grid from "../../grid/grid";
+import Config from "../../../config";
 
 import AStarAlgorithm from "./algorithms/score-based/AStar";
-import sleep from "../sleepUtility";
+import sleep from "../../sleepUtility";
 
 const grid = new Grid(Config.grid.width, true);
 const pathFindingAlgorithm = new AStarAlgorithm();

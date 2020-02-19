@@ -25,8 +25,8 @@ export default class AStar extends ScoreBasedAlgorithm {
     return newScore;
   }
 
-  prepareCellForPathFinding(cell) {
-    super.prepareCellForPathFinding(cell);
+  prepareCellForAlgorithmCalculation(cell) {
+    super.prepareCellForAlgorithmCalculation(cell);
 
     cell.pathData.g = 0;
   }

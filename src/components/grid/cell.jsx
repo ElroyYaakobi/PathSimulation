@@ -3,7 +3,7 @@ import React from "react";
 import { useDrop } from "react-dnd";
 import { makeStyles } from "@material-ui/core/styles";
 
-import pathFinder from "../../logic/pathFinding/pathfinder";
+import pathFinder from "../../logic/Algorithms/pathFinding/pathfinder";
 import ObjectDrawer from "./objects/objectDrawer";
 import ObjectTypes from "../../logic/grid/objectTypes";
 

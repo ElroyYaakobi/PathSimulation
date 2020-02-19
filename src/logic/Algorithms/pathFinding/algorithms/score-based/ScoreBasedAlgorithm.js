@@ -1,5 +1,5 @@
 import BasePathAlgorithm from "../BasePathAlgorithm";
-import ObjectTypes from "../../../grid/objectTypes";
+import ObjectTypes from "../../../../grid/objectTypes";
 
 export default class ScoreBasedAlgorithm extends BasePathAlgorithm {
   calculateRoute(grid, willRewindRoute) {
@@ -7,9 +7,12 @@ export default class ScoreBasedAlgorithm extends BasePathAlgorithm {
     const rewindStack = [];
     let tracedRoute = undefined;
 
-    let { unvisited, visited, startPoint, endPoint } = this.createPreCalcData(
-      grid
-    );
+    let {
+      unvisited,
+      visited,
+      startPoint,
+      endPoint
+    } = this.prepareForAlgorithmCalculation(grid);
 
     while (unvisited.length > 0) {
       const cell = this.findSmallestScoreCell(unvisited);
@@ -70,8 +73,8 @@ export default class ScoreBasedAlgorithm extends BasePathAlgorithm {
     return undefined;
   }
 
-  prepareCellForPathFinding(cell) {
-    super.prepareCellForPathFinding(cell);
+  prepareCellForAlgorithmCalculation(cell) {
+    super.prepareCellForAlgorithmCalculation(cell);
 
     // set score.
     cell.pathData.score = 0;

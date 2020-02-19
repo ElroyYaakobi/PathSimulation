@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 
-import PathFinder from "../../../logic/pathFinding/pathfinder";
+import PathFinder from "../../../logic/Algorithms/pathFinding/pathfinder";
 
 export default function ClearButton() {
   const handleClick = () => {

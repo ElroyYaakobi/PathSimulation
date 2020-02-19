@@ -1,11 +1,13 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 
-import PathFinder from "../../../logic/pathFinding/pathfinder";
+import PathFinder from "../../../logic/Algorithms/pathFinding/pathfinder";
+import MazeGenerator from "../../../logic/Algorithms/mazeGeneration/mazeGenerator";
 
 export default function SimulateButton() {
   const handleClick = () => {
-    PathFinder.simulatePath(true);
+    //PathFinder.simulatePath(true);
+    MazeGenerator.generateMaze();
   };
 
   return (
