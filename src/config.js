@@ -4,23 +4,31 @@ import TouchRNDBackend from "react-dnd-touch-backend";
 
 export default {
   grid: {
-    width: 12,
+    desktop: {
+      width: 38,
+      height: 12
+    },
+    mobile: {
+      width: 15,
+      height: 12
+    },
     defaultItems: [
-      { x: 5, y: 5, objectType: "startPoint" },
-      { x: 9, y: 9, objectType: "endPoint" },
-      { x: 4, y: 2, objectType: "obstacle" },
-      { x: 4, y: 3, objectType: "obstacle" },
-      { x: 4, y: 4, objectType: "obstacle" },
-      { x: 4, y: 5, objectType: "obstacle" },
-      { x: 4, y: 6, objectType: "obstacle" },
-      { x: 4, y: 7, objectType: "obstacle" },
-      { x: 5, y: 7, objectType: "obstacle" },
-      { x: 6, y: 7, objectType: "obstacle" },
-      { x: 7, y: 6, objectType: "obstacle" },
-      { x: 7, y: 8, objectType: "obstacle" }
+      { x: 0.9, y: 0.1, objectType: "startPoint" },
+      { x: 0.1, y: 0.75, objectType: "endPoint" },
+      { x: 0.25, y: 0.1, objectType: "obstacle" },
+      { x: 0.25, y: 0.2, objectType: "obstacle" },
+      { x: 0.25, y: 0.3, objectType: "obstacle" },
+      { x: 0.25, y: 0.4, objectType: "obstacle" },
+      { x: 0.25, y: 0.5, objectType: "obstacle" },
+      { x: 0.25, y: 0.7, objectType: "obstacle" },
+      { x: 0.25, y: 0.8, objectType: "obstacle" },
+      { x: 0.25, y: 0.9, objectType: "obstacle" }
     ]
   },
   getRndBackend: function() {
     return isMobile ? TouchRNDBackend : DesktopRNDBackend;
+  },
+  getGridCoords: function() {
+    return isMobile ? this.grid.mobile : this.grid.desktop;
   }
 };
