@@ -14,7 +14,7 @@ import "../../styling/header.css";
 
 export default function HeaderComponent(props) {
   return (
-    <div id="header" disabled="true">
+    <div id="header" disabled={true}>
       <span className="LeftItems">
         <Logo></Logo>
 

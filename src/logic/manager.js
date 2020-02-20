@@ -1,7 +1,8 @@
 import Grid from "./grid/grid";
 import Config from "../config";
 
-const grid = new Grid(Config.grid.width, true);
+const gridSize = Config.getGridCoords();
+const grid = new Grid(gridSize.width, gridSize.height, true);
 
 export default {
   grid

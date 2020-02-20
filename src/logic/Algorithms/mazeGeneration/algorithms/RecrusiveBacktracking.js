@@ -1,7 +1,7 @@
 import sample from "lodash.sample";
 import BaseMazeAlgorithm from "./BaseMazeAlgorithm";
 
-export default class RecrusiveBacktracing extends BaseMazeAlgorithm {
+export default class RecrusiveBacktracking extends BaseMazeAlgorithm {
   /**
    *
    * Simulate maze generation using recruisive backtracing algorithm.
@@ -17,7 +17,7 @@ export default class RecrusiveBacktracing extends BaseMazeAlgorithm {
     return this.recrusiveMove(checked, startPoint, endPoint);
   }
 
-  // allow movement only if wasn't checked before/ we are the parent cell of that cell (backtracing)
+  // allow movement only if wasn't checked before/ we are the parent cell of that cell (backtracking)
   isValidMove(checked, currentCell, targetCell) {
     return (
       !targetCell.mazeData.open &&
@@ -34,7 +34,7 @@ export default class RecrusiveBacktracing extends BaseMazeAlgorithm {
       return true;
     }
 
-    // all of our paths are blocked, go back! (backtracing)
+    // all of our paths are blocked, go back! (backtracking)
     if (neighbors.every(x => !this.isValidMove(checked, cell, x))) {
       return this.recrusiveMove(checked, cell.mazeData.prev, endPoint);
     }

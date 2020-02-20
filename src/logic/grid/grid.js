@@ -11,14 +11,16 @@ class Grid {
 
   //#region initializers
 
-  constructor(width, spawnDefault) {
+  constructor(width, height, spawnDefault) {
     // generate the cells
     this.width = width;
+    this.height = height;
+
     this.cells = [];
 
-    for (let x = 0; x < width; x++) {
-      for (let y = 0; y < width; y++) {
-        this.cells.push(new Cell(this, x, y));
+    for (let row = 0; row < height; row++) {
+      for (let column = 0; column < width; column++) {
+        this.cells.push(new Cell(this, column, row));
       }
     }
 
@@ -35,7 +37,10 @@ class Grid {
     const spawnItems = Config.grid.defaultItems;
 
     for (let spawnItem of spawnItems) {
-      this.getCell(spawnItem.x, spawnItem.y).objectType = spawnItem.objectType;
+      const x = Math.floor(spawnItem.x * this.width);
+      const y = Math.floor(spawnItem.y * this.height);
+
+      this.getCell(x, y).objectType = spawnItem.objectType;
     }
   }
 
@@ -58,7 +63,7 @@ class Grid {
    * @param y the y coordinate of a unit
    */
   transformUnitsToIndex(x, y) {
-    return y + x * this.width;
+    return x + y * this.width;
   }
 
   getCell(x, y) {
@@ -71,9 +76,9 @@ class Grid {
   }
 
   isInBounds(x, y) {
-    const { width } = this;
+    const { width, height } = this;
 
-    return x >= 0 && x < width && y >= 0 && y < width;
+    return x >= 0 && x < width && y >= 0 && y < height;
   }
 
   //#endregion

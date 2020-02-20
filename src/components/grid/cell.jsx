@@ -7,9 +7,11 @@ import Manager from "../../logic/manager";
 import ObjectDrawer from "./objects/objectDrawer";
 import ObjectTypes from "../../logic/grid/objectTypes";
 
+import { isMobile } from "react-device-detect";
+
 const toolbarSettings = require("../header/toolbarSettings");
 
-const cellWidth = window.innerWidth <= 700 ? 25 : 50; // hard coded for now
+const cellWidth = isMobile ? 25 : 50;
 const marginSpace = (window.innerWidth - Manager.grid.width * cellWidth) / 2;
 
 const useStyle = makeStyles({
