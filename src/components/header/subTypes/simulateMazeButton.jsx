@@ -1,21 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "@material-ui/core";
 
-import Manager from "../../../logic/manager";
 import MazeGenerator from "../../../logic/Algorithms/mazeGeneration/mazeGenerator";
 
-export default function SimulateMazeButton() {
-  const [isUsable, setIsUsable] = React.useState(-1);
-
-  useEffect(() => {
-    if (isUsable !== -1) return;
-    setIsUsable(true);
-
-    Manager.grid.eventEmitter.on("simulateChanged", simulating => {
-      setIsUsable(!simulating);
-    });
-  }, [isUsable]);
-
+export default function SimulateMazeButton(props) {
   const handleClick = () => {
     MazeGenerator.generateMaze();
   };
@@ -24,7 +12,7 @@ export default function SimulateMazeButton() {
     <Button
       variant="contained"
       color={"primary"}
-      disabled={!isUsable}
+      disabled={!props.isUsable}
       className="RightItem"
       onClick={handleClick}
     >

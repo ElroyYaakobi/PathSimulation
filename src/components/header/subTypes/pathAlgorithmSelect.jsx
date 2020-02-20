@@ -10,7 +10,7 @@ import DijkstraAlgorithm from "../../../logic/Algorithms/pathFinding/algorithms/
 
 const algorithms = [new AStarAlgorithm(), new DijkstraAlgorithm()];
 
-export default function PathAlgorithmSelect() {
+export default function PathAlgorithmSelect(props) {
   const [selectedAlgo, setAlgo] = React.useState(0);
 
   const changeHandler = event => {
@@ -31,6 +31,7 @@ export default function PathAlgorithmSelect() {
         value={selectedAlgo}
         onChange={changeHandler}
         className="SelectBox"
+        disabled={!props.isUsable}
       >
         <MenuItem value={0} className="SelectMenuItem">
           A*

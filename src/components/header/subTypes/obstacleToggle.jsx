@@ -7,7 +7,7 @@ import ObjectType from "../../../logic/grid/objectTypes";
 
 const toolbarSettings = require("../toolbarSettings");
 
-export default function ObstacleToggle() {
+export default function ObstacleToggle(props) {
   const [isSelected, setSelected] = React.useState(false);
 
   const handleChange = () => {
@@ -23,6 +23,7 @@ export default function ObstacleToggle() {
       selected={isSelected}
       onChange={handleChange}
       className="ToggleBox MiddleItem"
+      disabled={!props.isUsable}
     >
       <img
         alt="place obstacles"

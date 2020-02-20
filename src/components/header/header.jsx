@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import Logo from "./subTypes/logo";
 import ObstacleToggle from "./subTypes/obstacleToggle";
@@ -12,29 +12,21 @@ import ClearButton from "./subTypes/clearButton";
 
 import "../../styling/header.css";
 
-class HeaderComponent extends Component {
-  state = {
-    obstacleSelected: false
-  };
+export default function HeaderComponent(props) {
+  return (
+    <div id="header" disabled="true">
+      <span className="LeftItems">
+        <Logo></Logo>
 
-  render() {
-    return (
-      <div id="header" disabled="true">
-        <span className="LeftItems">
-          <Logo></Logo>
-
-          <ObstacleToggle className="LeftItem"></ObstacleToggle>
-          <PathAlgorithmSelect className="LeftItem"></PathAlgorithmSelect>
-          <MazeAlgorithmSelect className="LeftItem"></MazeAlgorithmSelect>
-        </span>
-        <span className="RightItems">
-          <SimulatePathButton></SimulatePathButton>
-          <SimulateMazeButton></SimulateMazeButton>
-          <ClearButton></ClearButton>
-        </span>
-      </div>
-    );
-  }
+        <ObstacleToggle isUsable={props.isUsable} className="LeftItem" />
+        <PathAlgorithmSelect isUsable={props.isUsable} className="LeftItem" />
+        <MazeAlgorithmSelect isUsable={props.isUsable} className="LeftItem" />
+      </span>
+      <span className="RightItems">
+        <SimulatePathButton isUsable={props.isUsable} />
+        <SimulateMazeButton isUsable={props.isUsable} />
+        <ClearButton isUsable={props.isUsable} />
+      </span>
+    </div>
+  );
 }
-
-export default HeaderComponent;

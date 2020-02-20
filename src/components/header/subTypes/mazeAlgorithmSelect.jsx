@@ -9,7 +9,7 @@ import RecrusiveBacktracingAlgorithm from "../../../logic/Algorithms/mazeGenerat
 
 const algorithms = [new RecrusiveBacktracingAlgorithm()];
 
-export default function MazeAlgorithmSelect() {
+export default function MazeAlgorithmSelect(props) {
   const [selectedAlgo, setAlgo] = React.useState(0);
 
   const changeHandler = event => {
@@ -26,6 +26,7 @@ export default function MazeAlgorithmSelect() {
         value={selectedAlgo}
         onChange={changeHandler}
         className="SelectBox"
+        disabled={!props.isUsable}
       >
         <MenuItem value={0} className="SelectMenuItem">
           Recrusive Backtracing

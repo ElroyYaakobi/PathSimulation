@@ -4,7 +4,6 @@ import { useDrop } from "react-dnd";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Manager from "../../logic/manager";
-import pathFinder from "../../logic/Algorithms/pathFinding/pathfinder";
 import ObjectDrawer from "./objects/objectDrawer";
 import ObjectTypes from "../../logic/grid/objectTypes";
 
@@ -34,9 +33,9 @@ export default function CellComponent(props) {
     accept: [ObjectTypes.startPoint, ObjectTypes.endPoint],
     drop: dropProps => {
       const objectType = dropProps.type;
-      pathFinder.grid.moveItemToCell(objectType, props.data);
+      Manager.grid.moveItemToCell(objectType, props.data);
     },
-    canDrop: () => props.data.objectType === ObjectTypes.empty
+    canDrop: () => props.data.objectType === ObjectTypes.empty && props.isUsable
   });
 
   //#endregion
@@ -53,6 +52,8 @@ export default function CellComponent(props) {
   };
 
   const handlePaintObject = function(isHoldingMouse) {
+    if (!props.isUsable) return;
+
     const { x, y, objectType } = props.data;
 
     // can't paint these types

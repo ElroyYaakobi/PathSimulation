@@ -52,7 +52,11 @@ class GridComponent extends Component {
       <DndProvider backend={Config.getRndBackend()}>
         <div className="grid">
           {this.state.cells.map((cell, key) => (
-            <CellComponent key={key} data={cell}></CellComponent>
+            <CellComponent
+              key={key}
+              data={cell}
+              isUsable={this.props.isUsable}
+            ></CellComponent>
           ))}
         </div>
       </DndProvider>

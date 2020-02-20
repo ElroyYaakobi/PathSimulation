@@ -1,21 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "@material-ui/core";
 
-import Manager from "../../../logic/manager";
 import PathFinder from "../../../logic/Algorithms/pathFinding/pathfinder";
 
-export default function SimulatePathButton() {
-  const [isUsable, setIsUsable] = React.useState(-1);
-
-  useEffect(() => {
-    if (isUsable !== -1) return;
-    setIsUsable(true);
-
-    Manager.grid.eventEmitter.on("simulateChanged", simulating => {
-      setIsUsable(!simulating);
-    });
-  }, [isUsable]);
-
+export default function SimulatePathButton(props) {
   const handleClick = () => {
     PathFinder.simulatePath(true);
   };
@@ -24,7 +12,7 @@ export default function SimulatePathButton() {
     <Button
       variant="contained"
       color="primary"
-      disabled={!isUsable}
+      disabled={!props.isUsable}
       className="RightItem"
       onClick={handleClick}
     >
