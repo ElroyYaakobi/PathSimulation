@@ -87,6 +87,7 @@ export default function CellComponent(props) {
     <div
       ref={drop}
       className={cssClasses.root + " cell"}
+      id={"x:" + props.data.x + "y:" + props.data.y}
       onClick={handleMousePress}
       onMouseMove={handleMouseHeld}
     >

@@ -28,6 +28,13 @@ class GridComponent extends Component {
 
     // register update events!
     Manager.grid.eventEmitter.on("modified", (cell, index) => {
+      /*
+      const { x, y } = cell;
+      const id = "x:" + x + "y:" + y;
+
+      const element = document.getElementById(id);
+      element.style.backgroundColor = cell.cellColor;
+      */
       const { cells } = this.state;
       cells[index] = cell.simplify();
       this.setState({ cells });
