@@ -5,6 +5,7 @@ import ObjectTypes from "../../grid/objectTypes";
 import RecruisiveBacktracing from "./algorithms/RecrusiveBacktracking";
 
 import sleep from "../../sleepUtility";
+import Config from "../../../config";
 
 let currentAlgorithm = new RecruisiveBacktracing();
 
@@ -26,14 +27,20 @@ const generateMaze = async function() {
 };
 
 const setMazeObstacles = function(grid, animate) {
+  const delay = Config.grid.simulationPlaybackDelay;
+
   return new Promise(async res => {
     console.log("generate");
-    for (let cell of grid.cells) {
+
+    // get index so we can have proper delay (every 5 steps)
+    for (let i = 0; i < grid.cells.length; i++) {
+      const cell = grid.cells[i];
       if (cell.mazeData.open || cell.objectType !== ObjectTypes.empty) continue;
       cell.objectType = ObjectTypes.obstacle;
 
-      if (!animate) continue;
-      await sleep(1);
+      // animate 5 cells at a time to make it faster and smoother :)
+      if (!animate || i % 5 !== 0) continue;
+      await sleep(delay);
     }
 
     res();

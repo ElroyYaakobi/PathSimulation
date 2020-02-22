@@ -3,6 +3,8 @@ import Manager from "../../manager";
 import AStarAlgorithm from "./algorithms/score-based/AStar";
 import sleep from "../../sleepUtility";
 
+import Config from "../../../config";
+
 const pathFindingAlgorithm = new AStarAlgorithm();
 const pathGenerated = false;
 
@@ -52,13 +54,15 @@ const simulatePathVisuals = function(grid) {
 };
 
 const simulateRewind = function(startPoint, endPoint, rewindRoute) {
+  const delay = Config.grid.simulationPlaybackDelay;
+
   return new Promise(async res => {
     rewindRoute.unshift(startPoint); // add start point to beginning
     rewindRoute.push(endPoint); // add end point to end
 
     for (let cell of rewindRoute) {
       cell.cellColor = rewindColor;
-      await sleep(1);
+      await sleep(delay);
     }
 
     // this will turn off the rewind route
@@ -67,8 +71,7 @@ const simulateRewind = function(startPoint, endPoint, rewindRoute) {
         if (cell.pathData.isPath) continue;
 
         cell.resetCellColor();
-        await sleep(1);
-        //cell.cellColor = routeColor;
+        await sleep(delay);
       }
       res();
     });

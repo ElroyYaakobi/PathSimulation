@@ -8,6 +8,7 @@ import ObjectDrawer from "./objects/objectDrawer";
 import ObjectTypes from "../../logic/grid/objectTypes";
 
 import { isMobile } from "react-device-detect";
+import getCellDOMId from "../../logic/cellNamingUtility";
 
 const toolbarSettings = require("../header/toolbarSettings");
 
@@ -16,12 +17,11 @@ const marginSpace = (window.innerWidth - Manager.grid.width * cellWidth) / 2;
 
 const useStyle = makeStyles({
   root: {
-    backgroundColor: data => data.cellColor,
+    // removing background assigning from here as we won't need that anymore,
+    // assigning directly to the DOM from the grid.jsx - on cell color updated event
+    //backgroundColor: data => data.cellColor,
     width: cellWidth,
     height: cellWidth,
-    border: "#379683 solid",
-    position: "absolute",
-    marginTop: "20vh",
     marginLeft: marginSpace,
     left: data => data.x * cellWidth,
     top: data => data.y * cellWidth
@@ -87,7 +87,7 @@ export default function CellComponent(props) {
     <div
       ref={drop}
       className={cssClasses.root + " cell"}
-      id={"x:" + props.data.x + "y:" + props.data.y}
+      id={getCellDOMId(props.data.x, props.data.y)}
       onClick={handleMousePress}
       onMouseMove={handleMouseHeld}
     >

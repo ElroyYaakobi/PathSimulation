@@ -5,6 +5,7 @@ import ObstacleToggle from "./subTypes/obstacleToggle";
 
 import PathAlgorithmSelect from "./subTypes/pathAlgorithmSelect";
 import MazeAlgorithmSelect from "./subTypes/mazeAlgorithmSelect";
+import SimulationSpeedSelect from "./subTypes/simulationSpeedSelect";
 
 import SimulatePathButton from "./subTypes/simulatePathButton";
 import SimulateMazeButton from "./subTypes/simulateMazeButton";
@@ -21,6 +22,7 @@ export default function HeaderComponent(props) {
         <ObstacleToggle isUsable={props.isUsable} className="LeftItem" />
         <PathAlgorithmSelect isUsable={props.isUsable} className="LeftItem" />
         <MazeAlgorithmSelect isUsable={props.isUsable} className="LeftItem" />
+        <SimulationSpeedSelect isUsable={props.isUsable} className="LeftItem" />
       </span>
       <span className="RightItems">
         <SimulatePathButton isUsable={props.isUsable} />

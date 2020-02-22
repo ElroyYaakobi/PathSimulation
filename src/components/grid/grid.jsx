@@ -4,6 +4,7 @@ import { DndProvider } from "react-dnd";
 import Manager from "../../logic/manager";
 import Pathfinder from "../../logic/Algorithms/pathFinding/pathfinder";
 import ObjectTypes from "../../logic/grid/objectTypes";
+import getCellDOMId from "../../logic/cellNamingUtility";
 import Config from "../../config";
 
 import CellComponent from "./cell";
@@ -26,21 +27,28 @@ class GridComponent extends Component {
       cells
     };
 
-    // register update events!
-    Manager.grid.eventEmitter.on("modified", (cell, index) => {
-      /*
+    // when ever a cell color is changed, update the cell dom manually instead of the react component.
+    // much faster!
+    Manager.grid.eventEmitter.on("colorChange", (cell, index) => {
       const { x, y } = cell;
-      const id = "x:" + x + "y:" + y;
+      const cellId = getCellDOMId(x, y);
 
-      const element = document.getElementById(id);
+      const element = document.getElementById(cellId);
       element.style.backgroundColor = cell.cellColor;
-      */
-      const { cells } = this.state;
-      cells[index] = cell.simplify();
-      this.setState({ cells });
     });
 
+    // when the object is changed, redraw the react component and also resimulate the path if already simulated before
     Manager.grid.eventEmitter.on("objectChange", (cell, index, { oldType }) => {
+      // update the state!
+      this.setState((state, props) => {
+        {
+          const { cells } = state;
+          cells[index] = cell.simplify();
+
+          return cells;
+        }
+      });
+
       // if we the old type of the cell was start/end points don't resimulate path as that will cause an error ->
       // simulating a path with one of them missing
       if (

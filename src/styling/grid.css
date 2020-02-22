@@ -16,6 +16,11 @@
 
 .cell {
   transition: background-color 0.3s ease;
+
+  background-color: rgb(237, 245, 225);
+  border: #379683 solid;
+  position: absolute;
+  margin-top: 20vh;
 }
 
 .cellObjectsParent {

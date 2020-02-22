@@ -31,10 +31,9 @@ class Cell {
 
     this._objectType = value;
 
-    this.grid.onCellModified(this, "modified"); // once for updating the grid visuals
     this.grid.onCellModified(this, "objectChange", {
       oldType: cachedObjectType
-    }); // once for recalculating path
+    }); // recalculate path and redraw object!
   }
 
   get cellColor() {
@@ -45,7 +44,7 @@ class Cell {
     if (!(typeof value === "string")) return;
 
     this._cellColor = value;
-    this.grid.onCellModified(this);
+    this.grid.onCellModified(this, "colorChange");
   }
 
   //#endregion

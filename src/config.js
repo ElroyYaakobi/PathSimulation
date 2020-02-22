@@ -2,6 +2,8 @@ import { isMobile } from "react-device-detect";
 import DesktopRNDBackend from "react-dnd-html5-backend";
 import TouchRNDBackend from "react-dnd-touch-backend";
 
+const simulationPlaybackDelay = 10;
+
 export default {
   grid: {
     desktop: {
@@ -23,7 +25,8 @@ export default {
       { x: 0.25, y: 0.7, objectType: "obstacle" },
       { x: 0.25, y: 0.8, objectType: "obstacle" },
       { x: 0.25, y: 0.9, objectType: "obstacle" }
-    ]
+    ],
+    simulationPlaybackDelay
   },
   getRndBackend: function() {
     return isMobile ? TouchRNDBackend : DesktopRNDBackend;

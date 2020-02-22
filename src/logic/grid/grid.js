@@ -48,7 +48,11 @@ class Grid {
 
   //#region cell helpers
 
-  onCellModified(cell, emitTarget = "modified", additionalData = undefined) {
+  onCellModified(cell, emitTarget, additionalData = undefined) {
+    if (!emitTarget || !(typeof emitTarget === "string")) {
+      throw new Error("emit target isn't specified/ isn't a string!");
+    }
+
     this.eventEmitter.emit(
       emitTarget,
       cell,
