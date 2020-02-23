@@ -2,7 +2,7 @@ import Manager from "../../manager";
 import PathFinder from "../pathFinding/pathfinder";
 import ObjectTypes from "../../grid/objectTypes";
 
-import RecruisiveBacktracing from "./algorithms/RecrusiveBacktracking";
+import RecruisiveBacktracing from "./algorithms/RecursiveBacktracking";
 
 import sleep from "../../sleepUtility";
 import Config from "../../../config";

@@ -19,7 +19,7 @@ export default class ScoreBasedAlgorithm extends BasePathAlgorithm {
       const cellNeighbors = cell.getNeighbors();
 
       // if we have the end point in our neighbors then we won!
-      if (cellNeighbors.find(x => x === endPoint)) {
+      if (cellNeighbors.find(x => x.cell === endPoint)) {
         endPoint.pathData.prev = cell;
         break;
       }
@@ -28,17 +28,18 @@ export default class ScoreBasedAlgorithm extends BasePathAlgorithm {
       visited.push(cell); // add cell to visited
 
       for (let neighbor of cellNeighbors) {
-        const neighborPathData = neighbor.pathData;
+        const neighborCell = neighbor.cell;
+        const neighborPathData = neighborCell.pathData;
 
         // ignore obstacles and already visited cells
         if (
-          neighbor.objectType === ObjectTypes.obstacle ||
-          visited.includes(neighbor)
+          neighborCell.objectType === ObjectTypes.obstacle ||
+          visited.includes(neighborCell)
         )
           continue;
 
         // calculate neighbor score
-        const score = this.calculateScore(cell, neighbor, endPoint);
+        const score = this.calculateScore(cell, neighborCell, endPoint);
         const isNeighborCalculated = neighborPathData.score > 0;
 
         // if this neighbor was already calculated and the old calculatioin score
@@ -46,14 +47,14 @@ export default class ScoreBasedAlgorithm extends BasePathAlgorithm {
         if (isNeighborCalculated && neighborPathData.score <= score) continue;
 
         if (!isNeighborCalculated) {
-          unvisited.push(neighbor);
+          unvisited.push(neighborCell);
         }
 
         neighborPathData.score = score;
         neighborPathData.prev = cell;
 
         if (!willRewindRoute) continue;
-        rewindStack.push(neighbor);
+        rewindStack.push(neighborCell);
       }
     }
 

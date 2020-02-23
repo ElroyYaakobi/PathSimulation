@@ -1,10 +1,10 @@
 import ObjectTypes from "./objectTypes";
 
 const neighborPossibilities = [
-  { x: 0, y: 1 }, // top
-  { x: 0, y: -1 }, // bottom
-  { x: 1, y: 0 }, // right
-  { x: -1, y: 0 } // left
+  { x: 0, y: 1, direction: "top" }, // top
+  { x: 0, y: -1, direction: "bottom" }, // bottom
+  { x: 1, y: 0, direction: "right" }, // right
+  { x: -1, y: 0, direction: "left" } // left
 ];
 
 class Cell {
@@ -67,17 +67,37 @@ class Cell {
     const neighbors = [];
 
     for (let neighborPossibility of neighborPossibilities) {
-      let units = {
-        x: this.x + neighborPossibility.x,
-        y: this.y + neighborPossibility.y
-      };
+      const neighbor = this.getNeighbor(neighborPossibility);
+      if (!neighbor) continue;
 
-      if (!this.grid.isInBounds(units.x, units.y)) continue;
-
-      neighbors.push(this.grid.getCell(units.x, units.y));
+      neighbors.push(neighbor);
     }
 
     return neighbors;
+  }
+
+  getNeighbor(neighborPossibility) {
+    if (!neighborPossibility) return undefined;
+
+    let units = {
+      x: this.x + neighborPossibility.x,
+      y: this.y + neighborPossibility.y
+    };
+
+    if (!this.grid.isInBounds(units.x, units.y)) return undefined;
+
+    return {
+      cell: this.grid.getCell(units.x, units.y),
+      direction: neighborPossibility.direction
+    };
+  }
+
+  getNeighborAtDirection(direction) {
+    const neighborPossibility = neighborPossibilities.find(
+      x => x.direction === direction
+    );
+
+    return this.getNeighbor(neighborPossibility);
   }
 
   ////#endregion
