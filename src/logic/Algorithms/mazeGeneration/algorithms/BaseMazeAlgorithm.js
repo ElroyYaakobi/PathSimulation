@@ -21,7 +21,7 @@ export default class BaseMazeAlgorithm extends BaseAlgorithm {
    */
   prepareForAlgorithmCalculation(grid) {
     const {
-      unvisited,
+      visited,
       startPoint,
       endPoint
     } = super.prepareForAlgorithmCalculation(grid);
@@ -29,8 +29,11 @@ export default class BaseMazeAlgorithm extends BaseAlgorithm {
     // start with cleaning all obstacles
     grid.clearAllObjects(ObjectTypes.obstacle);
 
+    // start the array with the start point as first element
+    visited.push(startPoint);
+
     return {
-      checked: unvisited,
+      visited,
       startPoint,
       endPoint
     };

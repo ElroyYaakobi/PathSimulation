@@ -19,14 +19,14 @@ const generateMaze = async function() {
 
   // generate maze
   const grid = Manager.grid;
-  currentAlgorithm.generateMaze(grid);
+  const { visited } = currentAlgorithm.generateMaze(grid);
 
-  await setMazeObstacles(grid, true);
+  await setMazeObstacles(grid, visited, true);
 
   Manager.grid.setSimulationState(false);
 };
 
-const setMazeObstacles = function(grid, animate) {
+const setMazeObstacles = function(grid, visited, animate) {
   const delay = Config.grid.simulationPlaybackDelay;
 
   return new Promise(async res => {
@@ -35,7 +35,9 @@ const setMazeObstacles = function(grid, animate) {
     // get index so we can have proper delay (every 5 steps)
     for (let i = 0; i < grid.cells.length; i++) {
       const cell = grid.cells[i];
-      if (cell.mazeData.open || cell.objectType !== ObjectTypes.empty) continue;
+      if (visited.includes(cell) || cell.objectType !== ObjectTypes.empty)
+        continue;
+
       cell.objectType = ObjectTypes.obstacle;
 
       // animate 5 cells at a time to make it faster and smoother :)
