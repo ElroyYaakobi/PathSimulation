@@ -1,4 +1,5 @@
 import sample from "lodash.sample";
+import { clampDirectionToOne } from "../../../grid/unitsHelper";
 
 import ObjectTypes from "../../../grid/objectTypes";
 import BaseAlgorithm from "../../BaseAlgorithm";
@@ -55,5 +56,22 @@ export default class BaseMazeAlgorithm extends BaseAlgorithm {
     }
 
     return cell;
+  }
+
+  /**
+   * In case we are using 'Strict Blockwise' method (calculate skipping 2 cells at a time)
+   * we want to be able to get the cell between these cells
+   * @param cellA
+   * @param cellB
+   */
+  getCellBetweenCells(cellA, cellB) {
+    const { dirX, dirY } = clampDirectionToOne(
+      cellA.x - cellB.x,
+      cellA.y - cellB.y
+    );
+
+    const inBetweenCell = cellB.getNeighborAtUnitsDirection(dirX, dirY);
+
+    return inBetweenCell;
   }
 }

@@ -1,5 +1,4 @@
 import sample from "lodash.sample";
-import { clampDirectionToOne } from "../../../grid/unitsHelper";
 import BaseMazeAlgorithm from "./BaseMazeAlgorithm";
 
 export default class RecursiveBacktracking extends BaseMazeAlgorithm {
@@ -51,15 +50,7 @@ export default class RecursiveBacktracking extends BaseMazeAlgorithm {
     stack.push(randomMoveCell);
     visited.push(randomMoveCell);
 
-    const { dirX, dirY } = clampDirectionToOne(
-      cell.x - randomMoveCell.x,
-      cell.y - randomMoveCell.y
-    );
-
-    const inBetweenCell = randomMoveCell.getNeighborAtUnitsDirection(
-      dirX,
-      dirY
-    );
+    const inBetweenCell = this.getCellBetweenCells(cell, randomMoveCell);
 
     visited.push(inBetweenCell);
     rewindStack.push(inBetweenCell);
