@@ -62,23 +62,6 @@ const drawRewind = function(grid, visited, rewindStack, animate) {
     }
 
     res();
-
-    /*
-    // get index so we can have proper delay (every 5 steps)
-    for (let i = 0; i < grid.cells.length; i++) {
-      const cell = grid.cells[i];
-      if (visited.includes(cell) || cell.objectType !== ObjectTypes.empty)
-        continue;
-
-      cell.objectType = ObjectTypes.obstacle;
-
-      // animate 5 cells at a time to make it faster and smoother :)
-      if (!animate || i % 5 !== 0) continue;
-      await sleep(delay);
-    }
-
-    res();
-    */
   });
 };
 
