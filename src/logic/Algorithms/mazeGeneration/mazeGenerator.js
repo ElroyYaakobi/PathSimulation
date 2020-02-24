@@ -27,7 +27,7 @@ const generateMaze = async function() {
 };
 
 const drawRewind = function(grid, visited, rewindStack, animate) {
-  const delay = Config.grid.simulationPlaybackDelay * 2.5;
+  const delay = Config.grid.simulationPlaybackDelay * 4;
 
   return new Promise(async res => {
     // start with setting all cells color to route color &
