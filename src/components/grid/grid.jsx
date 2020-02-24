@@ -40,7 +40,7 @@ class GridComponent extends Component {
     // when the object is changed, redraw the react component and also resimulate the path if already simulated before
     Manager.grid.eventEmitter.on("objectChange", (cell, index, { oldType }) => {
       // update the state!
-      this.setState((state, props) => {
+      this.setState(state => {
         {
           const { cells } = state;
           cells[index] = cell.simplify();

@@ -14,8 +14,6 @@ export default class BaseAlgorithm {
     const endPoint = grid.getCellWithObjectType(ObjectTypes.endPoint);
 
     return {
-      unvisited: [],
-      visited: [],
       startPoint,
       endPoint
     };

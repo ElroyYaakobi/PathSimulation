@@ -63,11 +63,11 @@ class Cell {
     return { x, y, objectType, cellColor: _cellColor };
   }
 
-  getNeighbors() {
+  getNeighbors(spaceMultiplier = 1) {
     const neighbors = [];
 
     for (let neighborPossibility of neighborPossibilities) {
-      const neighbor = this.getNeighbor(neighborPossibility);
+      const neighbor = this.getNeighbor(neighborPossibility, spaceMultiplier);
       if (!neighbor) continue;
 
       neighbors.push(neighbor);
@@ -76,18 +76,18 @@ class Cell {
     return neighbors;
   }
 
-  getNeighbor(neighborPossibility) {
+  getNeighbor(neighborPossibility, spaceMultiplier = 1) {
     if (!neighborPossibility) return undefined;
 
-    let units = {
-      x: this.x + neighborPossibility.x,
-      y: this.y + neighborPossibility.y
-    };
+    const cell = this.getNeighborAtUnitsDirection(
+      neighborPossibility.x * spaceMultiplier,
+      neighborPossibility.y * spaceMultiplier
+    );
 
-    if (!this.grid.isInBounds(units.x, units.y)) return undefined;
+    if (!cell) return undefined;
 
     return {
-      cell: this.grid.getCell(units.x, units.y),
+      cell,
       direction: neighborPossibility.direction
     };
   }
@@ -98,6 +98,17 @@ class Cell {
     );
 
     return this.getNeighbor(neighborPossibility);
+  }
+
+  getNeighborAtUnitsDirection(x, y) {
+    let units = {
+      x: this.x + x,
+      y: this.y + y
+    };
+
+    if (!this.grid.isInBounds(units.x, units.y)) return undefined;
+
+    return this.grid.getCell(units.x, units.y);
   }
 
   ////#endregion

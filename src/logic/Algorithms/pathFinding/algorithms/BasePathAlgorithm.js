@@ -13,14 +13,10 @@ export default class BasePathAlgorithm extends BaseAlgorithm {
   }
 
   prepareForAlgorithmCalculation(grid) {
-    const {
-      unvisited,
-      visited,
-      startPoint,
-      endPoint
-    } = super.prepareForAlgorithmCalculation(grid);
+    const { startPoint, endPoint } = super.prepareForAlgorithmCalculation(grid);
 
-    unvisited.push(startPoint);
+    const unvisited = [startPoint];
+    const visited = [];
 
     return {
       unvisited,

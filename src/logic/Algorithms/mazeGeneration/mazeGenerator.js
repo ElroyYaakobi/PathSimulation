@@ -19,19 +19,51 @@ const generateMaze = async function() {
 
   // generate maze
   const grid = Manager.grid;
-  const { visited } = currentAlgorithm.generateMaze(grid);
+  const { visited, rewindStack } = currentAlgorithm.generateMaze(grid);
 
-  await setMazeObstacles(grid, visited, true);
+  await drawRewind(grid, visited, rewindStack, true);
 
   Manager.grid.setSimulationState(false);
 };
 
-const setMazeObstacles = function(grid, visited, animate) {
+const drawRewind = function(grid, visited, rewindStack, animate) {
   const delay = Config.grid.simulationPlaybackDelay;
 
   return new Promise(async res => {
-    console.log("generate");
+    // start with setting all cells color to route color &
+    // assigning all empty cells to obstacles
+    for (let cell of grid.cells) {
+      if (cell.objectType !== ObjectTypes.empty) continue;
 
+      cell.cellColor = Config.rewind.routeColor;
+      cell.objectType = ObjectTypes.obstacle;
+    }
+
+    // iterate the rewind stack and set each rewinded cell color to the rewind color
+    // after a certain delay, reset the cell color and if its an obstacle cell (not a flag/ home)
+    // set the object type to empty -> meaning, clear the cell/ create a passage
+    for (let cell of rewindStack) {
+      cell.cellColor = Config.rewind.rewindColor;
+
+      await sleep(delay);
+
+      cell.resetCellColor();
+
+      // clear the actual cell
+      if (!visited.includes(cell) || cell.objectType !== ObjectTypes.obstacle)
+        continue;
+
+      cell.objectType = ObjectTypes.empty;
+    }
+
+    // to finish it off, clear the cell color of all cells
+    for (let cell of grid.cells) {
+      cell.resetCellColor();
+    }
+
+    res();
+
+    /*
     // get index so we can have proper delay (every 5 steps)
     for (let i = 0; i < grid.cells.length; i++) {
       const cell = grid.cells[i];
@@ -46,11 +78,12 @@ const setMazeObstacles = function(grid, visited, animate) {
     }
 
     res();
+    */
   });
 };
 
 export default {
   currentAlgorithm,
   generateMaze,
-  setMazeObstacles
+  drawRewind
 };

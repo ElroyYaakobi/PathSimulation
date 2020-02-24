@@ -1,4 +1,5 @@
 import sample from "lodash.sample";
+import { clampDirectionToOne } from "../../../grid/unitsHelper";
 import BaseMazeAlgorithm from "./BaseMazeAlgorithm";
 
 export default class RecursiveBacktracking extends BaseMazeAlgorithm {
@@ -10,19 +11,26 @@ export default class RecursiveBacktracking extends BaseMazeAlgorithm {
    */
   generateMaze(grid) {
     // prepare grid for maze generation!
-    let { visited, startPoint } = this.prepareForAlgorithmCalculation(grid);
+    let {
+      visited,
+      rewindStack,
+      startPoint
+    } = this.prepareForAlgorithmCalculation(grid);
 
     const stack = [];
 
-    this.recursiveMove(startPoint, stack, visited);
+    this.recursiveMove(startPoint, stack, visited, rewindStack);
 
     return {
-      visited
+      visited,
+      rewindStack
     };
   }
 
-  recursiveMove(cell, stack, visited) {
-    const neighbors = cell.getNeighbors();
+  recursiveMove(cell, stack, visited, rewindStack) {
+    rewindStack.push(cell); // push to rewind stack
+
+    const neighbors = cell.getNeighbors(2);
 
     const movableNeighbors = neighbors.filter(neighbor =>
       this.isValidMove(neighbor, visited)
@@ -33,7 +41,7 @@ export default class RecursiveBacktracking extends BaseMazeAlgorithm {
       // if we are back to the starting point then the generation is over.
       if (stack.length === 0) return true;
 
-      return this.recursiveMove(stack.pop(), stack, visited);
+      return this.recursiveMove(stack.pop(), stack, visited, rewindStack);
     }
 
     // get a random movement and setup
@@ -43,28 +51,24 @@ export default class RecursiveBacktracking extends BaseMazeAlgorithm {
     stack.push(randomMoveCell);
     visited.push(randomMoveCell);
 
-    return this.recursiveMove(randomMoveCell, stack, visited);
+    const { dirX, dirY } = clampDirectionToOne(
+      cell.x - randomMoveCell.x,
+      cell.y - randomMoveCell.y
+    );
+
+    const inBetweenCell = randomMoveCell.getNeighborAtUnitsDirection(
+      dirX,
+      dirY
+    );
+
+    visited.push(inBetweenCell);
+    rewindStack.push(inBetweenCell);
+
+    return this.recursiveMove(randomMoveCell, stack, visited, rewindStack);
   }
 
-  // allow movement only if wasn't checked before/ we are the parent cell of that cell (backtracking)
+  // allow movement only if wasn't checked before
   isValidMove(neighbor, visited) {
-    if (visited.includes(neighbor.cell)) return false;
-
-    const adjacentNeighbor = neighbor.cell.getNeighborAtDirection(
-      neighbor.direction
-    );
-
-    if (!adjacentNeighbor) return false;
-
-    const neighborNeighbors = neighbor.cell.getNeighbors();
-
-    return (
-      // get the neighbors of the target neighbor and make sure that the amount of open neighbors on that is 1 (current cell)
-      // to make sure that it hasn't been opened from any other cell!
-      neighborNeighbors.reduce(
-        (counter, { cell }) => (visited.includes(cell) ? counter + 1 : counter),
-        0
-      ) === 1
-    );
+    return !visited.includes(neighbor.cell);
   }
 }

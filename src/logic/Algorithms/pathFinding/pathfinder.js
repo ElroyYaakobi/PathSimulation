@@ -42,14 +42,12 @@ const clearPath = function() {
 };
 
 //#region Visuals
-const rewindColor = "rgb(256, 256,0)";
-const routeColor = "rgb(72,209,204)";
 
 const simulatePathVisuals = function(grid) {
   for (let cell of grid.cells) {
     if (!cell.pathData.isPath) continue;
 
-    cell.cellColor = routeColor;
+    cell.cellColor = Config.rewind.routeColor;
   }
 };
 
@@ -61,7 +59,7 @@ const simulateRewind = function(startPoint, endPoint, rewindRoute) {
     rewindRoute.push(endPoint); // add end point to end
 
     for (let cell of rewindRoute) {
-      cell.cellColor = rewindColor;
+      cell.cellColor = Config.rewind.rewindColor;
       await sleep(delay);
     }
 
@@ -82,7 +80,7 @@ const simulateRewind = function(startPoint, endPoint, rewindRoute) {
       for (let cell of rewindRoute) {
         if (!cell.pathData.isPath || visitedCells.includes(cell)) continue;
 
-        cell.cellColor = routeColor;
+        cell.cellColor = Config.rewind.routeColor;
         visitedCells.push(cell);
 
         await sleep(100);

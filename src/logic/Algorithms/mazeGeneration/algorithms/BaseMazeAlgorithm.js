@@ -20,20 +20,17 @@ export default class BaseMazeAlgorithm extends BaseAlgorithm {
    * @param grid the grid that the maze shall be generated to
    */
   prepareForAlgorithmCalculation(grid) {
-    const {
-      visited,
-      startPoint,
-      endPoint
-    } = super.prepareForAlgorithmCalculation(grid);
+    const { startPoint, endPoint } = super.prepareForAlgorithmCalculation(grid);
 
     // start with cleaning all obstacles
     grid.clearAllObjects(ObjectTypes.obstacle);
 
     // start the array with the start point as first element
-    visited.push(startPoint);
+    const visited = [startPoint];
 
     return {
       visited,
+      rewindStack: [],
       startPoint,
       endPoint
     };
