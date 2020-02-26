@@ -1,6 +1,3 @@
-import sample from "lodash.sample";
-import Config from "../../../../config";
-
 import BaseMazeAlgorithm from "./BaseMazeAlgorithm";
 
 /**
@@ -19,6 +16,14 @@ import BaseMazeAlgorithm from "./BaseMazeAlgorithm";
  *
  */
 export default class EllersAlgorithm extends BaseMazeAlgorithm {
+  /**
+   * generate the maze,
+   * returns ->
+   *
+   * rewind cells array
+   * openCells array
+   * @param grid
+   */
   generateMaze(grid) {
     // prepare grid for maze generation!
     let { rewindStack } = this.prepareForAlgorithmCalculation(grid);
@@ -146,9 +151,8 @@ export default class EllersAlgorithm extends BaseMazeAlgorithm {
       const nextCell = grid.getCell(cell.x + 2, cell.y); // adjust with two as we are using strict blockwise implementation
       if (!nextCell) continue;
 
-      // if we are not last row, follow algorithm instructions. If we are, just link all adjacent cells!
-      //if (!isLastRow) {
-      if (Math.random() <= 0.5 && !isLastRow) continue; // random
+      // if we are in the last row combine adjacent cells no matter what, if not, use a random value
+      if (this.getRndTrueFalse() && !isLastRow) continue;
 
       const currCellSet = cellsToSets[cell.index];
       const nextCellSet = cellsToSets[nextCell.index];
@@ -200,7 +204,7 @@ export default class EllersAlgorithm extends BaseMazeAlgorithm {
         // by adding items to it which could cause incorrect iterations if we iterate over the original array.
         const copiedSetCells = [...setCells];
         for (let cellIndex of copiedSetCells) {
-          if (Math.random() <= 0.5) continue; // random
+          if (this.getRndTrueFalse()) continue; // random
 
           const cell = grid.cells[cellIndex];
           if (!cell || cell.y !== currRowId) continue; // only work with cells from the current row
@@ -282,5 +286,12 @@ export default class EllersAlgorithm extends BaseMazeAlgorithm {
    */
   getRowCells(grid, rowId) {
     return grid.getRowCells(rowId, 1, grid.width - 1, 2);
+  }
+
+  /**
+   * This method returns a random true/ false value
+   */
+  getRndTrueFalse() {
+    return Math.random() <= 0.5;
   }
 }
