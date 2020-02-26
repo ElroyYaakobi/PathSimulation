@@ -8,10 +8,11 @@ const neighborPossibilities = [
 ];
 
 class Cell {
-  constructor(grid, x, y) {
+  constructor(grid, x, y, index) {
     this.grid = grid;
     this.x = x;
     this.y = y;
+    this.index = index;
 
     this._objectType = ObjectTypes.empty;
     this.resetCellColor();

@@ -21,7 +21,7 @@ export default class RecursiveBacktracking extends BaseMazeAlgorithm {
     this.recursiveMove(startPoint, stack, visited, rewindStack);
 
     return {
-      visited,
+      openCells: visited,
       rewindStack
     };
   }

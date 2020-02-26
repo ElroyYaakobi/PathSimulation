@@ -20,7 +20,9 @@ class Grid {
 
     for (let row = 0; row < height; row++) {
       for (let column = 0; column < width; column++) {
-        this.cells.push(new Cell(this, column, row));
+        const index = this.transformUnitsToIndex(column, row);
+
+        this.cells.push(new Cell(this, column, row, index));
       }
     }
 
@@ -70,7 +72,44 @@ class Grid {
     return x + y * this.width;
   }
 
+  /**
+   *
+   * Get all of the cells in a row
+   *
+   * @param rowId
+   * @param startOffset
+   * @param endOffset
+   * @param spaceOffset space the cell retrieval (for instance, in blockwise we aim to get cells in spaces of two)
+   */
+  getRowCells(
+    rowId,
+    startOffset = undefined,
+    endOffset = undefined,
+    spaceOffset = 1
+  ) {
+    if (rowId < 0 || rowId > this.height) {
+      console.error("row id is out of bounds");
+      return undefined;
+    }
+
+    startOffset = startOffset || 0;
+    endOffset = endOffset || this.width;
+
+    const rowCells = [];
+
+    for (let i = startOffset; i < endOffset; i += spaceOffset) {
+      const cell = this.getCell(i, rowId);
+      if (cell === undefined) continue;
+
+      rowCells.push(cell);
+    }
+
+    return rowCells;
+  }
+
   getCell(x, y) {
+    if (!this.isInBounds(x, y)) return undefined;
+
     const index = this.transformUnitsToIndex(x, y);
     return this.cells[index];
   }

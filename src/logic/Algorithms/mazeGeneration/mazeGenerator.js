@@ -7,26 +7,25 @@ import RecruisiveBacktracing from "./algorithms/RecursiveBacktracking";
 import sleep from "../../sleepUtility";
 import Config from "../../../config";
 
-let currentAlgorithm = new RecruisiveBacktracing();
+const currentAlgorithm = new RecruisiveBacktracing();
 
 const generateMaze = async function() {
-  if (!currentAlgorithm) return;
+  if (!this.currentAlgorithm) return;
 
   Manager.grid.setSimulationState(true);
 
   // clear path finder first so that we don't cause any issues
   PathFinder.clearPath();
 
-  // generate maze
   const grid = Manager.grid;
-  const { visited, rewindStack } = currentAlgorithm.generateMaze(grid);
+  const { openCells, rewindStack } = this.currentAlgorithm.generateMaze(grid);
 
-  await drawRewind(grid, visited, rewindStack, true);
+  await drawRewind(grid, openCells, rewindStack);
 
   Manager.grid.setSimulationState(false);
 };
 
-const drawRewind = function(grid, visited, rewindStack, animate) {
+const drawRewind = function(grid, visited, rewindStack) {
   const delay = Config.grid.simulationPlaybackDelay * 4;
 
   return new Promise(async res => {

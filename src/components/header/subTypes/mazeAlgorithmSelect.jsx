@@ -5,9 +5,14 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
 import MazeGenerator from "../../../logic/Algorithms/mazeGeneration/mazeGenerator";
-import RecrusiveBacktrackingAlgorithm from "../../../logic/Algorithms/mazeGeneration/algorithms/RecursiveBacktracking";
 
-const algorithms = [new RecrusiveBacktrackingAlgorithm()];
+import RecrusiveBacktrackingAlgorithm from "../../../logic/Algorithms/mazeGeneration/algorithms/RecursiveBacktracking";
+import EllerMazeAlgorithm from "../../../logic/Algorithms/mazeGeneration/algorithms/EllerMazeAlgorithm";
+
+const algorithms = [
+  new RecrusiveBacktrackingAlgorithm(),
+  new EllerMazeAlgorithm()
+];
 
 export default function MazeAlgorithmSelect(props) {
   const [selectedAlgo, setAlgo] = React.useState(0);
@@ -30,6 +35,9 @@ export default function MazeAlgorithmSelect(props) {
       >
         <MenuItem value={0} className="SelectMenuItem">
           Recursive Backtracking
+        </MenuItem>
+        <MenuItem value={1} className="SelectMenuItem">
+          Eller's Algorithm
         </MenuItem>
       </Select>
     </FormControl>
