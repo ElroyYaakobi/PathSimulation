@@ -3,7 +3,7 @@ import BaseMazeAlgorithm from "./BaseMazeAlgorithm";
 export default class RecursiveDivisionAlgorithm extends BaseMazeAlgorithm {
   horizontal = "horizontal";
   vertical = "vertical";
-  maxDetail = 4;
+  maxDetail = 2;
 
   passageCarver = false; // we create walls, not open them
 
@@ -19,7 +19,17 @@ export default class RecursiveDivisionAlgorithm extends BaseMazeAlgorithm {
     // prepare grid for maze generation!
     let { visited } = this.prepareForAlgorithmCalculation(grid);
 
-    this.simpleRecursiveMove(grid, 0, 0, grid.width, grid.height, visited);
+    this.closeOffAllBoarders(grid, visited);
+
+    this.simpleRecursiveMove(
+      grid,
+      1,
+      1,
+      grid.width - 1,
+      grid.height - 1,
+      visited,
+      true
+    );
 
     return {
       openCells: visited,
@@ -38,7 +48,7 @@ export default class RecursiveDivisionAlgorithm extends BaseMazeAlgorithm {
    * @param height
    * @param visited
    */
-  simpleRecursiveMove(grid, x, y, width, height, visited) {
+  simpleRecursiveMove(grid, x, y, width, height, visited, initialRun = false) {
     this.recursiveMove(
       grid,
       x,
@@ -46,7 +56,7 @@ export default class RecursiveDivisionAlgorithm extends BaseMazeAlgorithm {
       width,
       height,
       visited,
-      this.determineCrossDirection(width, height)
+      this.determineCrossDirection(width, height, initialRun)
     );
   }
 
@@ -75,6 +85,19 @@ export default class RecursiveDivisionAlgorithm extends BaseMazeAlgorithm {
     const px = wx + (horizontal ? this.getRand(width) : 0);
     const py = wy + (horizontal ? 0 : this.getRand(height));
 
+    // this makes sure that all units are allowed meaning the wall unit is even and the passage unit isn't even
+    // so that we don't cover a passage with a wall
+    if (!this.areUnitsAllowed(wx, wy, px, py, horizontal))
+      return this.recursiveMove(
+        grid,
+        x,
+        y,
+        width,
+        height,
+        visited,
+        orientation
+      );
+
     // get the movement direction
     const direction = {
       x: horizontal ? 1 : 0,
@@ -89,12 +112,12 @@ export default class RecursiveDivisionAlgorithm extends BaseMazeAlgorithm {
       const cell = grid.getCell(wx, wy);
       if (!cell) break;
 
+      if (!(wx === px && wy === py)) {
+        visited.push(cell);
+      }
+
       wx += direction.x;
       wy += direction.y;
-
-      if (wx === px && wy === py) continue; // if a passage don't mark as a wall.
-
-      visited.push(cell);
     }
 
     // create sub bounds!
@@ -129,11 +152,55 @@ export default class RecursiveDivisionAlgorithm extends BaseMazeAlgorithm {
    * @param width
    * @param height
    */
-  determineCrossDirection(width, height) {
+  determineCrossDirection(width, height, initialRun) {
+    if (initialRun)
+      return Math.random() >= 0.5 ? this.horizontal : this.vertical;
+
     return width < height ? this.horizontal : this.vertical;
   }
 
+  /**
+   *
+   * Pre generation, close off all of the walls
+   *
+   * @param grid
+   * @param visited
+   */
+  closeOffAllBoarders(grid, visited) {
+    const { width, height } = grid;
+    for (let cell of grid.cells) {
+      if (cell.x > 0 && cell.x < width - 1 && cell.y > 0 && cell.y < height - 1)
+        continue;
+
+      visited.push(cell);
+    }
+  }
+
+  /**
+   *
+   * Get a random 0 -> max value
+   *
+   * @param max
+   */
   getRand(max) {
     return Math.floor(max * Math.random());
+  }
+
+  /**
+   *
+   * Checks if the proper wall unit is even and proper passage unit isn't even to make sure the units won't overlap with passage units.
+   *
+   * @param wx
+   * @param wy
+   * @param px
+   * @param py
+   * @param isHorizontal
+   */
+  areUnitsAllowed(wx, wy, px, py, isHorizontal) {
+    if (isHorizontal) {
+      return wy % 2 === 0 && px % 2 !== 0;
+    }
+
+    return wx % 2 === 0 && py % 2 !== 0;
   }
 }
