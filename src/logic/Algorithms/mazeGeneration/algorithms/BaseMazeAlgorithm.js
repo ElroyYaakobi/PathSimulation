@@ -6,6 +6,12 @@ import BaseAlgorithm from "../../BaseAlgorithm";
 
 export default class BaseMazeAlgorithm extends BaseAlgorithm {
   /**
+   * What this means is whether the algorithm is the type of algorithm that starts with all walls closed and
+   * graudally opens them. If set to false, it means that the algorithm starts with an empty scene and gradually adds walls to it
+   */
+  passageCarver = true;
+
+  /**
    *
    * A base class for all future maze algorithms!
    *

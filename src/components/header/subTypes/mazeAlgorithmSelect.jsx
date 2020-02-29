@@ -8,10 +8,12 @@ import MazeGenerator from "../../../logic/Algorithms/mazeGeneration/mazeGenerato
 
 import RecrusiveBacktrackingAlgorithm from "../../../logic/Algorithms/mazeGeneration/algorithms/RecursiveBacktracking";
 import EllerMazeAlgorithm from "../../../logic/Algorithms/mazeGeneration/algorithms/EllerMazeAlgorithm";
+import RecursiveDivisionAlgorithm from "../../../logic/Algorithms/mazeGeneration/algorithms/RecursiveDivisionAlgorithm";
 
 const algorithms = [
   new RecrusiveBacktrackingAlgorithm(),
-  new EllerMazeAlgorithm()
+  new EllerMazeAlgorithm(),
+  new RecursiveDivisionAlgorithm()
 ];
 
 export default function MazeAlgorithmSelect(props) {
@@ -38,6 +40,9 @@ export default function MazeAlgorithmSelect(props) {
         </MenuItem>
         <MenuItem value={1} className="SelectMenuItem">
           Eller's Algorithm
+        </MenuItem>
+        <MenuItem value={2} className="SelectMenuItem">
+          Recursive Division
         </MenuItem>
       </Select>
     </FormControl>
