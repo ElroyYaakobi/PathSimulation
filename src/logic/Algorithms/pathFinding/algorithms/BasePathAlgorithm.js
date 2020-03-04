@@ -13,7 +13,10 @@ export default class BasePathAlgorithm extends BaseAlgorithm {
   }
 
   prepareForAlgorithmCalculation(grid) {
-    const { startPoint, endPoint } = super.prepareForAlgorithmCalculation(grid);
+    const {
+      startPoint,
+      endPoint
+    } = super.prepareForAlgorithmCalculation(grid);
 
     const unvisited = [startPoint];
     const visited = [];
@@ -33,19 +36,19 @@ export default class BasePathAlgorithm extends BaseAlgorithm {
     cell.pathData = {};
   }
 
-  tracebackRoute(endPoint) {
-    if (!endPoint || !endPoint.pathData.prev) return;
+  tracebackRoute(startPoint, endPoint) {
+    if (!startPoint || !endPoint || !endPoint.pathData.prev) return;
 
     const route = [];
 
     let prev = endPoint;
     while (prev) {
-      prev.pathData.isPath = true;
-      prev = prev.pathData.prev;
-
       route.push(prev);
+      prev.pathData.isPath = true;
+
+      prev = prev.pathData.prev;
     }
 
-    return route;
+    return route.reverse();
   }
 }

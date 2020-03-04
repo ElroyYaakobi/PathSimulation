@@ -7,8 +7,9 @@ import Select from "@material-ui/core/Select";
 import PathFinder from "../../../logic/Algorithms/pathFinding/pathfinder";
 import AStarAlgorithm from "../../../logic/Algorithms/pathFinding/algorithms/score-based/AStar";
 import DijkstraAlgorithm from "../../../logic/Algorithms/pathFinding/algorithms/score-based/Dijkstra";
+import BidirectionalAlgorithm from "../../../logic/Algorithms/pathFinding/algorithms/score-based/Bidirectional";
 
-const algorithms = [new AStarAlgorithm(), new DijkstraAlgorithm()];
+const algorithms = [new AStarAlgorithm(), new DijkstraAlgorithm(), new BidirectionalAlgorithm()];
 
 export default function PathAlgorithmSelect(props) {
   const [selectedAlgo, setAlgo] = React.useState(0);
@@ -38,6 +39,9 @@ export default function PathAlgorithmSelect(props) {
         </MenuItem>
         <MenuItem value={1} className="SelectMenuItem">
           Dijkstra
+        </MenuItem>
+        <MenuItem value={2} className="SelectMenuItem">
+          Bi-Directional
         </MenuItem>
       </Select>
     </FormControl>

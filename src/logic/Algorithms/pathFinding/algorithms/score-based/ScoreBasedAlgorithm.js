@@ -19,8 +19,7 @@ export default class ScoreBasedAlgorithm extends BasePathAlgorithm {
       const cellNeighbors = cell.getNeighbors();
 
       // if we have the end point in our neighbors then we won!
-      if (cellNeighbors.find(x => x.cell === endPoint)) {
-        endPoint.pathData.prev = cell;
+      if (cellNeighbors.find(neighbor => this.isNeighborTheTarget(cell, neighbor, endPoint))) {
         break;
       }
 
@@ -47,7 +46,7 @@ export default class ScoreBasedAlgorithm extends BasePathAlgorithm {
         if (isNeighborCalculated && neighborPathData.score <= score) continue;
 
         if (!isNeighborCalculated) {
-          unvisited.push(neighborCell);
+          this.addCellToUnvisited(cell, neighborCell, unvisited);
         }
 
         neighborPathData.score = score;
@@ -58,16 +57,18 @@ export default class ScoreBasedAlgorithm extends BasePathAlgorithm {
       }
     }
 
-    const foundPath = endPoint.pathData.prev;
-    if (foundPath) {
-      tracedRoute = this.tracebackRoute(endPoint);
-    }
+    tracedRoute = this.tracebackRoute(startPoint, endPoint);
 
     const t1 = Date.now();
 
     console.log("It took " + (t1 - t0) + " milliseconds to compute path!");
 
-    return { tracedRoute, rewindStack, startPoint, endPoint };
+    return {
+      tracedRoute,
+      rewindStack,
+      startPoint,
+      endPoint
+    };
   }
 
   calculateScore(cell, neighborCell, endPoint) {
@@ -99,5 +100,19 @@ export default class ScoreBasedAlgorithm extends BasePathAlgorithm {
     }
 
     return smallestScoreCell;
+  }
+
+  isNeighborTheTarget(currCell, neighbor, endPoint) {
+    const isEndTarget = neighbor.cell === endPoint;
+
+    if (!isEndTarget) return false;
+
+    // set the prev cell of the neighbor (ie end point) to the current cell!
+    neighbor.cell.pathData.prev = currCell;
+    return true;
+  }
+
+  addCellToUnvisited(cell, neighborCell, unvisited) {
+    unvisited.push(neighborCell);
   }
 }

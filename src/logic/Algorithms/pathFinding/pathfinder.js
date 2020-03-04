@@ -8,7 +8,7 @@ import Config from "../../../config";
 const pathFindingAlgorithm = new AStarAlgorithm();
 const pathGenerated = false;
 
-const simulatePath = async function(willRewindRoute = false) {
+const simulatePath = async function (willRewindRoute = false) {
   if (!this.pathFindingAlgorithm) return;
 
   Manager.grid.setSimulationState(true);
@@ -23,7 +23,7 @@ const simulatePath = async function(willRewindRoute = false) {
   } = this.pathFindingAlgorithm.calculateRoute(grid, willRewindRoute);
 
   if (willRewindRoute) {
-    await this.simulateRewind(startPoint, endPoint, rewindStack);
+    await this.simulateRewind(startPoint, endPoint, rewindStack, tracedRoute);
   } else {
     this.simulatePathVisuals(grid);
   }
@@ -34,7 +34,7 @@ const simulatePath = async function(willRewindRoute = false) {
   return tracedRoute;
 };
 
-const clearPath = function() {
+const clearPath = function () {
   if (!this.pathFindingAlgorithm) return;
 
   this.pathFindingAlgorithm.prepareForAlgorithmCalculation(Manager.grid); // clear all current path finding simulations
@@ -43,7 +43,7 @@ const clearPath = function() {
 
 //#region Visuals
 
-const simulatePathVisuals = function(grid) {
+const simulatePathVisuals = function (grid) {
   for (let cell of grid.cells) {
     if (!cell.pathData.isPath) continue;
 
@@ -51,7 +51,7 @@ const simulatePathVisuals = function(grid) {
   }
 };
 
-const simulateRewind = function(startPoint, endPoint, rewindRoute) {
+const simulateRewind = function (startPoint, endPoint, rewindRoute, tracedRoute) {
   const delay = Config.grid.simulationPlaybackDelay;
 
   return new Promise(async res => {
@@ -75,13 +75,11 @@ const simulateRewind = function(startPoint, endPoint, rewindRoute) {
     });
 
     // this will show the actual end route
-    let visitedCells = [];
     const renderTrailPromise = new Promise(async secRes => {
-      for (let cell of rewindRoute) {
-        if (!cell.pathData.isPath || visitedCells.includes(cell)) continue;
+      for (let cell of tracedRoute) {
+        if (!cell) break;
 
         cell.cellColor = Config.rewind.routeColor;
-        visitedCells.push(cell);
 
         await sleep(100);
       }
