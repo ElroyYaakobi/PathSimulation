@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/PathSimulation/static/css/main.1d2042b0.chunk.css",
-    "main.js": "/PathSimulation/static/js/main.821f609e.chunk.js",
-    "main.js.map": "/PathSimulation/static/js/main.821f609e.chunk.js.map",
+    "main.css": "/PathSimulation/static/css/main.b6b7beeb.chunk.css",
+    "main.js": "/PathSimulation/static/js/main.6d16a034.chunk.js",
+    "main.js.map": "/PathSimulation/static/js/main.6d16a034.chunk.js.map",
     "runtime-main.js": "/PathSimulation/static/js/runtime-main.0846e42a.js",
     "runtime-main.js.map": "/PathSimulation/static/js/runtime-main.0846e42a.js.map",
-    "static/js/2.8f6d6f08.chunk.js": "/PathSimulation/static/js/2.8f6d6f08.chunk.js",
-    "static/js/2.8f6d6f08.chunk.js.map": "/PathSimulation/static/js/2.8f6d6f08.chunk.js.map",
+    "static/js/2.4b815a17.chunk.js": "/PathSimulation/static/js/2.4b815a17.chunk.js",
+    "static/js/2.4b815a17.chunk.js.map": "/PathSimulation/static/js/2.4b815a17.chunk.js.map",
     "index.html": "/PathSimulation/index.html",
-    "precache-manifest.6c2cc48259c9b9e2bdab496522818def.js": "/PathSimulation/precache-manifest.6c2cc48259c9b9e2bdab496522818def.js",
+    "precache-manifest.813b031ca800b140fd926819d8427f25.js": "/PathSimulation/precache-manifest.813b031ca800b140fd926819d8427f25.js",
     "service-worker.js": "/PathSimulation/service-worker.js",
-    "static/css/main.1d2042b0.chunk.css.map": "/PathSimulation/static/css/main.1d2042b0.chunk.css.map",
-    "static/js/2.8f6d6f08.chunk.js.LICENSE.txt": "/PathSimulation/static/js/2.8f6d6f08.chunk.js.LICENSE.txt",
+    "static/css/main.b6b7beeb.chunk.css.map": "/PathSimulation/static/css/main.b6b7beeb.chunk.css.map",
+    "static/js/2.4b815a17.chunk.js.LICENSE.txt": "/PathSimulation/static/js/2.4b815a17.chunk.js.LICENSE.txt",
     "static/media/iconfinder_path_103676.png": "/PathSimulation/static/media/iconfinder_path_103676.d2fdd691.png",
-    "static/media/obstacle.png": "/PathSimulation/static/media/obstacle.7bf64a37.png",
+    "static/media/obstacle.png": "/PathSimulation/static/media/obstacle.8e1ecd41.png",
     "static/media/startPoint.png": "/PathSimulation/static/media/startPoint.b2d3c123.png"
   },
   "entrypoints": [
     "static/js/runtime-main.0846e42a.js",
-    "static/js/2.8f6d6f08.chunk.js",
-    "static/css/main.1d2042b0.chunk.css",
-    "static/js/main.821f609e.chunk.js"
+    "static/js/2.4b815a17.chunk.js",
+    "static/css/main.b6b7beeb.chunk.css",
+    "static/js/main.6d16a034.chunk.js"
   ]
 }
