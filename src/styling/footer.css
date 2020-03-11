@@ -1,0 +1,9 @@
+.footer {
+    position: absolute;
+
+    font-size: 1.3vh;
+    top: 94.5%;
+    line-height: 0em;
+
+    left: 1vw;
+}

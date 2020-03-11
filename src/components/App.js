@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+import React, {
+  useEffect
+} from "react";
 
 import HeaderComponent from "./header/header";
 import GridComponent from "./grid/grid";
+import FooterComponent from "./footer/footer";
 
 import Manager from "../logic/manager";
 
@@ -22,10 +25,12 @@ export default function App() {
     });
   }, [isUsable]);
 
+  
   return (
     <div className="App">
       <HeaderComponent isUsable={isUsable}></HeaderComponent>
       <GridComponent isUsable={isUsable}></GridComponent>
+      <FooterComponent></FooterComponent>
     </div>
   );
 }
